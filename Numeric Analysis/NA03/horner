@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <math.h>
+
+double horner(double x)
+{
+    double v = 1.0;
+    int i;
+
+    for(i = 3; i > 0; i--) {
+        v =1.0 - v*x/i;
+    }
+    return v*x;
+}
+double func(double x)
+{
+    double v = 1.0;
+    double xx = x;
+    int i;
+
+    for(i = 1; i <= 3; i++){
+        xx *= ;
+        v += xx;
+    }
+
+}
+int main(void)
+{
+    double x = sin(0);
+    
+    return 0;
+}
