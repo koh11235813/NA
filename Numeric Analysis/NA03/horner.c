@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
+#ifndef PI
+#define PI 3.14159265359
+#endif
+
 double horner(double x)
 {
     double v = 1.0;
@@ -31,7 +35,7 @@ double func(double x)
 }
 int main(void)
 {
-    double x = sin(0);
+    double x = sin(PI/4);
     
     printf("horner %lf\n",horner(x));
     printf("func %lf\n",func(x));
