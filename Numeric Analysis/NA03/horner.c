@@ -7,7 +7,7 @@ double horner(double x)
     int i;
 
     for(i = 3; i > 0; i--) {
-        v =1.0 - v* (-x)*x/(2*i*(2*i+1));
+        v =1.0 - v*x*x/(2*i*(2*i+1));
     }
     return v*x;
 }
@@ -23,17 +23,17 @@ double func(double x)
     double xx = x;
     int i;
 
-    for(i = 1; i <= 3; i++){
+    for(i = 1; i <= 100; i++){
         xx *= -x*x/(2*i*(2*i+1));
         v += xx;
     }
-    return v
+    return v;
 }
 int main(void)
 {
     double x = sin(0);
     
     printf("horner %lf\n",horner(x));
-    printf("func &lf\n",func(x));
+    printf("func %lf\n",func(x));
     return 0;
 }
