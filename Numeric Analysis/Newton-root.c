@@ -8,7 +8,7 @@ double newton(double x)
 
 	v = 2.0;
 	vv = v + 1.0;
-	while(fabs(vv - v) > x - 10) {
+	while(fabs(vv - v) > 1e-10) {
 		printf("	v = %e\n", v);
 		vv = v;
 		v = (v*v+x) / (2*v);

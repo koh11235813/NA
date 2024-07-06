@@ -3,30 +3,34 @@
 #include <math.h>
 #define DELTA 1e-10
 
-double func(double x)
-{
-    return (1/3)*x*x*x + (1/8)*x*x - 6; //(1/3)x^3 + (1/8)x^2 -6
+double func(double x){
+    return ((x*x/4) - (x/2) - (1/2)); //(1/4)x^2- (1/2)x -(1/2)
 }
 
-double dfunc(double x)
-{
-    return x*x + (1/4)*x; //x^2 + (1/4)x
+double dfunc(double x){
+    return ((x/2) - (1/2)); //(1/2)*x - (1/2)
 }
 
-double newton(double x)
+double newton(double x, long int *count)
 {
-    double xn;
+    double xn = 0.0;
 
     while(1) {
-        xn = x = func(x)/dfunc(x);      // (c)
+        *count += 1;
+        xn = x - func(x)/dfunc(x);      // (c)
         if (fabs(xn - x) < DELTA) {
             return xn;
         }
+        if(*count > 1e+100){
+            return -1;
+        }
+        printf("    (xn, x) = (%e, %e) , %d\n", xn, x, *count);
         x = xn;                         // (e)
     }
     return x;
 }
-double binary(const double low, const double high, int *count)
+
+double binary(double low, double high, long int *count)
 {
     double l, lv, m, mv, h, hv;
 
@@ -35,32 +39,42 @@ double binary(const double low, const double high, int *count)
     h = high;
     hv = func(h);
 
-    count = 0;
     while (fabs(h - l) > DELTA) {
-        m = (l + h)/ 2;
+        m = (l + h)/ 2.0;
         mv = func(m);
-        if ( mv < 0) {                  // (b)
-            h = m;
-            hv = mv;
-        } else {
+        if (mv < 0) {                  // (b)
             l = m;
             lv = mv;
+        } else {
+            h = m;
+            hv = mv;
         }
-        count++;
+        if(*count > 50)
+        {
+            return -1;
+        }
+        printf("    (h, l) = (%f, %f)\n", h, l);
+        *count += 1;
     }
-    return (l + h)/ 2;
+    *count += 1;
+    return (l + h)/ 2.0;
 }
 int main(void) {
-    int count;
-
+    long int count_a, count_b;
     double high, low, x;
+    double a_1, a_2;
 
+    count_a = 0;
+    count_b = 0;
     high = 3.0;
     low = 2.0;
-    x = 3.0;
+    x = 2.50;
+    
+    a_1 = newton(x, &count_a);
+    a_2 = binary(low, high, &count_b);
 
-    printf("newton : %lf\n", newton(x));
-    printf("binary : %lf, count %d\n", binary(low, high,&count));
+    printf("newton : %lf, count %d\n", a_1, count_a);
+    printf("binary : %lf, count %d\n", a_2, count_b);
     
     return 0;
 }

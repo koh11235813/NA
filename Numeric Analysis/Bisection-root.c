@@ -17,7 +17,7 @@ double bisection(double x)
 	hi = 2.0;
 	hv = func(hi, x);
 
-	while(fabs(hi-lo) > le-10) {
+	while(fabs(hi-lo) > 1e-10) {
 		printf("	(lo, hi) = (%e, %e)\n", lo, hi);
 		md = (lo + hi) / 2.0;
 		mv = func(md, x);
