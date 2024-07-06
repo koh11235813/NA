@@ -42,12 +42,12 @@ double binary(double low, double high, long int *count)
     while (fabs(h - l) > DELTA) {
         m = (l + h)/ 2.0;
         mv = func(m);
-        if (mv < 0) {                  // (b)
-            l = m;
-            lv = mv;
-        } else {
+        if (lv*mv < 0) {                  // (b)
             h = m;
             hv = mv;
+        } else {
+            l = m;
+            lv = mv;
         }
         if(*count > 50)
         {
