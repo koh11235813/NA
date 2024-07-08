@@ -4,11 +4,11 @@
 #define DELTA 1e-10
 
 double func(double x){
-    return ((x*x/4) - (x/2) - (1/2)); //(1/4)x^2- (1/2)x -(1/2)
+    return x*x - 5; //x = sqrt(5)とし、f(x) = x^2 - 5
 }
 
 double dfunc(double x){
-    return ((x/2) - (1/2)); //(1/2)*x - (1/2)
+    return 2*x; //f'(x) = 2x
 }
 
 double newton(double x, long int *count)
@@ -17,14 +17,14 @@ double newton(double x, long int *count)
 
     while(1) {
         *count += 1;
-        xn = x - func(x)/dfunc(x);      // (c)
+        xn = x - (func(x)/dfunc(x));      // (c)
         if (fabs(xn - x) < DELTA) {
             return xn;
         }
         if(*count > 1e+100){
             return -1;
         }
-        printf("    (xn, x) = (%e, %e) , %d\n", xn, x, *count);
+        printf("    (xn, x) = (%e, %e) , %ld\n", xn, x, *count);
         x = xn;                         // (e)
     }
     return x;
@@ -73,8 +73,8 @@ int main(void) {
     a_1 = newton(x, &count_a);
     a_2 = binary(low, high, &count_b);
 
-    printf("newton : %lf, count %d\n", a_1, count_a);
-    printf("binary : %lf, count %d\n", a_2, count_b);
+    printf("newton : %lf, count %ld\n", a_1, count_a);
+    printf("binary : %lf, count %ld\n", a_2, count_b);
     
     return 0;
 }
