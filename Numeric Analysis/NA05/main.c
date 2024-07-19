@@ -3,6 +3,31 @@
 #include <math.h>
 #define DIM 3
 
+void show_array(double x[DIM][DIM + 1]);
+
+void init(double x[DIM][DIM + 1])
+{
+    int i, j;
+
+    for (i = 0; i < DIM; i++) {
+        for (j = 0; j < DIM + 1; j++) {
+            printf("x[%d][%d]:", i, j);
+            scanf("%lf", &x[i][j]);
+        }
+    }
+    show_array(x);
+}
+void show_array(double x[DIM][DIM + 1])
+{
+    int i, j;
+    for (i = 0; i < DIM; i++) {
+        for (j = 0; j < DIM + 1; j++) {
+            printf("%5.3f",x[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 void solvearray(x)
 double x[DIM][DIM+1];
 {
@@ -46,6 +71,15 @@ double x[DIM][DIM+1];
 
 int main(void)
 {
+    char check = 'n';
+    double x[DIM][DIM + 1];
+    do{
+        init(x);
+        printf("Are you OK? (y/n):");
+        scanf("%c", &check);
+    }while(check != 'y');
 
+    solvearray(x);
+    show_array(x);
     return 0;
 }
