@@ -86,21 +86,23 @@ void solvearray(double x[dim][dim+1])
         d = x[i][i];
         for(k = i; k <=dim; k++){
             x[i][k] /= d;
-            for (j = 0; j < dim; j++){
-                if(i != j)  {
-                    d = x[j][i];
-                    for(k = i; k <= dim; k++) {
-                        x[j][k] -= x[i][k]*d;
-                    }
+            for (j = i + 1; j < dim; j++){
+                d = x[j][i];
+                for(k = i; k <= dim; k++) {
+                    x[j][k] -= x[i][k]*d;
                 }
             }
+        }
+    }
+    for(i = dim - 1; i >= 0; i--) {
+        for(j = i - 1; j >= 0; j--) {
+            x[j][dim] -= x[i][dim]*x[j][i];
         }
     }
 }
 
 int main(void)
 {
-
     printf("What's dimention:");
     scanf("%d",&dim);
 
@@ -123,5 +125,6 @@ int main(void)
 
     show_array(x);
     CheckArray(x, xcp);
+
     return 0;
 }
