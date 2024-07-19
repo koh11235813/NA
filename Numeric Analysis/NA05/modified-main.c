@@ -2,17 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#define DIM 2
 
-int dim; //dimention
 
-void show_array(double x[dim][dim + 1]);
+void show_array(double x[DIM][DIM + 1]);
 
-void init(double x[dim][dim + 1])
+void init(double x[DIM][DIM + 1])
 {
 
     int i, j;
-    for (i = 0; i < dim; i++) {
-        for (j = 0; j < dim + 1; j++) {
+    for (i = 0; i < DIM; i++) {
+        for (j = 0; j < DIM + 1; j++) {
             printf("x[%d][%d]:", i, j);
             scanf("%lf", &x[i][j]);
         }
@@ -20,56 +20,56 @@ void init(double x[dim][dim + 1])
     puts("");
     show_array(x);
 }
-void show_array(double x[dim][dim + 1])
+void show_array(double x[DIM][DIM + 1])
 {
     int i, j;
-    for (i = 0; i < dim; i++) {
-        for (j = 0; j < dim + 1; j++) {
+    for (i = 0; i < DIM; i++) {
+        for (j = 0; j < DIM + 1; j++) {
             printf("  %10.2f",x[i][j]);
         }
         printf("\n");
     }
 }
 
-void CopyArray(double to[dim][dim + 1], double from[dim][dim + 1])
+void CopyArray(double to[DIM][DIM + 1], double from[DIM][DIM + 1])
 {
     int i, j;
 
-    for (i = 0; i < dim; i++) {
-        for (j = 0; j <=dim; j++) {
+    for (i = 0; i < DIM; i++) {
+        for (j = 0; j <=DIM; j++) {
             to[i][j] = from[i][j];
         }
     }
 }
 
-void CheckArray(double after[dim][dim + 1], double before[dim][dim + 1])
+void CheckArray(double after[DIM][DIM + 1], double before[DIM][DIM + 1])
 {
     int i, j;
     double s;
 
     printf("=== Residue Check ===\n");
-    for(i = 0; i < dim; i++) {
+    for(i = 0; i < DIM; i++) {
         s = 0.0;
-        for (j = 0; j < dim; j++) {
-            s += -after[j][dim] * before[i][j];
+        for (j = 0; j < DIM; j++) {
+            s += -after[j][DIM] * before[i][j];
         }
-        s += before[i][dim];
+        s += before[i][DIM];
         printf("%+e\n", s);
     }
 }
 
-void solvearray(double x[dim][dim+1])
+void solvearray(double x[DIM][DIM+1])
 {
     int i, j, k;
     double d;
 
-    for(i = 0; i < dim; i++){
+    for(i = 0; i < DIM; i++){
         if (x[i][i] == 0.0) {
             //exchange row
-            for (j = i; j < dim; j++) {
+            for (j = i; j < DIM; j++) {
                 if (x[j][i] != 0.0) {
                     printf("--- exchanging row_%d and row?%d\n", i, j);
-                    for(k = i; k<= dim; k++) {
+                    for(k = i; k<= DIM; k++) {
                         d = x[i][k];
                         x[i][k] = x[j][k];
                         x[j][k] = d;
@@ -77,38 +77,34 @@ void solvearray(double x[dim][dim+1])
                     break;
                 }
             }
-            if ( j == dim) {
+            if ( j == DIM) {
                 //no non-zero pivot is available
                 printf("There is no non-zero pivot. Aborting...\n");
                 exit(-1);
             }
         }
         d = x[i][i];
-        for(k = i; k <=dim; k++){
+        for(k = i; k <=DIM; k++){
             x[i][k] /= d;
-            for (j = i + 1; j < dim; j++){
+            for (j = i + 1; j < DIM; j++){
                 d = x[j][i];
-                for(k = i; k <= dim; k++) {
+                for(k = i; k <= DIM; k++) {
                     x[j][k] -= x[i][k]*d;
                 }
             }
         }
     }
-    for(i = dim - 1; i >= 0; i--) {
+    for(i = DIM - 1; i >= 0; i--) {
         for(j = i - 1; j >= 0; j--) {
-            x[j][dim] -= x[i][dim]*x[j][i];
+            x[j][DIM] -= x[i][DIM]*x[j][i];
         }
     }
 }
 
 int main(void)
 {
-    printf("What's dimention:");
-    scanf("%d",&dim);
-
-    printf("dim = %d\n", dim);
     char check = 'n';
-    double x[dim][dim + 1], xcp[dim][dim + 1];
+    double x[DIM][DIM + 1], xcp[DIM][DIM + 1];
 
     do{
         init(x);
