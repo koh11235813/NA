@@ -4,6 +4,13 @@
 #include <math.h>
 #define DIM 2
 
+void clean_stdin(void)
+{
+    double c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
 
 void show_array(double x[DIM][DIM + 1]);
 
@@ -60,7 +67,7 @@ void CheckArray(double after[DIM][DIM + 1], double before[DIM][DIM + 1])
 
 void solvearray(double x[DIM][DIM+1])
 {
-    int i, j, k;
+    int i, j, k, l, m;
     double d;
 
     for(i = 0; i < DIM; i++){
@@ -86,11 +93,11 @@ void solvearray(double x[DIM][DIM+1])
         d = x[i][i];
         for(k = i; k <=DIM; k++){
             x[i][k] /= d;
-            for (j = i + 1; j < DIM; j++){
-                d = x[j][i];
-                for(k = i; k <= DIM; k++) {
-                    x[j][k] -= x[i][k]*d;
-                }
+        }
+        for (j = i + 1; j < DIM; j++){
+            d = x[j][i];
+            for(k = i; k <= DIM; k++) {
+                x[j][k] -= x[i][k]*d;
             }
         }
     }
@@ -104,16 +111,19 @@ void solvearray(double x[DIM][DIM+1])
 int main(void)
 {
     char check = 'n';
-    double x[DIM][DIM + 1], xcp[DIM][DIM + 1];
-
+    double x[DIM][DIM + 1] = {{2, -1, 1}, {1, 3, 11}};
+    double xcp[DIM][DIM + 1];
+/*
     do{
         init(x);
 
-        fflush(stdin); // scanfのバッファをフラッシュ
+        clean_stdin(); // scanfのバッファをフラッシュ
 
         printf("Are you OK? (y/n):");
         scanf("%c", &check);
+        printf("\n");
     }while(check !='y');
+*/
 
     CopyArray(xcp, x);
 
