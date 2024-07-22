@@ -4,6 +4,14 @@
 #include <math.h>
 #define DIM 4
 
+void clean_stdin(void)
+{
+    double c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
+
 void show_array(double x[DIM][DIM + 1]);
 
 void init(double x[DIM][DIM + 1])
@@ -109,7 +117,7 @@ int main(void)
     do{
         init(x);
 
-        fflush(stdin); // scanfのバッファをフラッシュ
+        clean_stdin(); // scanfのバッファをフラッシュ
 
         printf("Are you OK? (y/n):");
         scanf("%c", &check);
